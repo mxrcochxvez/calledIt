@@ -1,6 +1,21 @@
+<h1>Create an event!</h1>
+<form method="POST" action="/events/create">
+    <div>
+        <label for="name">Event Name:</label>
+        <input id="name" type="text" name="name" placeholder="Name" />
+    </div>
+    <div>
+        <label for="date">Event Date:</label>
+        <input id="date" type="date" name="date" />
+    </div>
+    <button type="submit">Make it happen</button>
+</form>
+
 {{#each events}}
 <div>
     <h1>{{ name }}</h1>
     <p>{{ date }}</p>
+
+    <a href="/events/delete/{{ _id }}">Delete Event</a>
 </div>
 {{/each}}

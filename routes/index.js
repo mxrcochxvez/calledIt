@@ -20,9 +20,11 @@ router.get('/events', verify, async (req, res) => {
   res.render('events', { events })
 })
 
-router.post('/events/api/create', verify, async (req, res) => {
+router.post('/events/create', verify, async (req, res) => {
   const { error } = eventValidation(req.body)
   if (error) return res.status(400).send(error.details[0].message);
+
+  console.log(req.body.date)
 
   const event = new Event({
     name: req.body.name,
@@ -30,11 +32,24 @@ router.post('/events/api/create', verify, async (req, res) => {
     date: new Date(req.body.date)
   })
 
+  console.log(event.date)
+
   try {
     const savedEvent = await event.save();
-    res.send(savedEvent._id);
+    res.status(200).redirect('/events');
   } catch (err) {
     res.status(400).send(err);
+  }
+})
+
+router.get('/events/delete/:id', verify, async (req, res) => {
+  const event = await Event.findById(req.params.id)
+
+  try {
+    const deleteEvent = event.deleteOne();
+    res.status(200).redirect('/events');
+  } catch(err) {
+    res.send(err);
   }
 })
 

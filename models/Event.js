@@ -12,8 +12,7 @@ const eventSchema = mongoose.Schema({
         require: true
     },
     date: {
-        type: Date,
-        default: Date.now()
+        type: String,
     }
 });
 
